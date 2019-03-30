@@ -38,7 +38,7 @@ img {
     padding-left: 0;
 }
 
-#characterSelect, #enemies, #defender {
+#characterSelect, #enemies, #defender, #myCharacter {
     justify-content: space-evenly;
 }
 
