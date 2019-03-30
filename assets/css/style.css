@@ -8,6 +8,7 @@ body{
 .row {
    /* margin-left: -150px;*/
    padding-bottom: 15px;
+   
 }
 #container {
     
@@ -15,13 +16,36 @@ body{
 .col-sm-3 {
     padding-left: 0;
 }
-.container {
+.container, #btn {
     margin-left: 5%;
+    text-align: center;
+    
 }
 p {
     margin-left: auto;
     margin-right: auto;
 }
+.title {
+    margin-left: 0;
+    font-size: 25px;
+}
 img {
-    width: 200px;
+    width: 150px;
+    height: 105px;
+}
+
+.col-sm-2 {
+    padding-left: 0;
+}
+
+#characterSelect, #enemies, #defender {
+    justify-content: space-evenly;
+}
+
+#ObiRow, #AniRow, #MaulRow, #SidRow {
+    border: 3px solid #73AD21;
+    background-color: whitesmoke;
+}
+#btn {
+    padding-left: 43%;
 }
