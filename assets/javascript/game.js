@@ -6,45 +6,53 @@ var anakin = $("#AniRow");
 var darthMaul = $("#MaulRow");
 var darthSidious = $("#SidRow");
 
+var elementArray = [obiWan, anakin, darthMaul, darthSidious];
+
+var attatckPromt = $("#attack");
+var defendPromt = $("#defend");
+
 var ObiWan = {
     name: "Obi Wan",
     health: 120,
-    attackPower: 6,
+    attackPower: 1.5,
     attackPoints: 6,
-    counterAttack: 6,
-    element: $("#ObiRow")
+    counterAttack: 15,
+    element: obiWan
 }
 
 var Anakin = {
     name: "Anakin",
     health: 100,
-    attackPower: 7,
+    attackPower: 1.5,
     attackPoints: 7,
-    counterAttack: 7,
-    element: $("#AniRow")
+    counterAttack: 20,
+    element: anakin
 }
 
 var DarthMaul = {
     name: "Darth Maul",
     health: 180,
-    attackPower: 4,
+    attackPower: 1.2,
     attackPoints: 4,
-    counterAttack: 4,
-    element: $("#MaulRow")
+    counterAttack: 10,
+    element: darthMaul
 }
 
 var DarthSidious = {
     name: "Darth Sidious",
     health: 150,
-    attackPower: 5,
+    attackPower: 1.1,
     attackPoints: 5,
-    counterAttack: 5,
-    element: $("#SidRow")
+    counterAttack: 12,
+    element: darthSidious
 }
 
 
 var isPlayer = false;
 var isEnemy = false;
+
+var playerDefeated = false;
+var enemyDefeated = false;
 
 var player;
 var enemy;
@@ -56,36 +64,54 @@ $(document).ready(function() {
 
     $(obiWan).on("click", function() {
         if (!isPlayer) {
-            
-            startGame(this, [anakin, darthMaul, darthSidious], ObiWan);
+       
+            var index = elementArray.indexOf(obiWan);
+
+            elementArray.splice(index,1);
+
+            startGame(this, elementArray, ObiWan);
         }
         
     });
     $(anakin).on("click", function() {
         if (!isPlayer) {
-            
-            startGame(this, [obiWan, darthMaul, darthSidious], Anakin);
+
+            var index = elementArray.indexOf(anakin);
+
+            elementArray.splice(index,1);
+
+            startGame(this, elementArray, Anakin);
         }
     });
     $(darthMaul).on("click", function() {
        if (!isPlayer) {
-        
-        startGame(this, [anakin, obiWan, darthSidious], DarthMaul);
+
+        var index = elementArray.indexOf(darthMaul);
+
+        elementArray.splice(index,1);
+
+        startGame(this, elementArray, DarthMaul);
        }
     });
     $(darthSidious).on("click", function() {
         if (!isPlayer) {
-            
-            startGame(this, [anakin, darthMaul, obiWan], DarthSidious);
+
+            var index = elementArray.indexOf(darthSidious);
+
+            elementArray.splice(index,1);
+
+            startGame(this, elementArray, DarthSidious);
         }
     });
 
     $("#btn").on("click", function() {
        
-        if(isPlayer && isEnemy) {
+        if(isPlayer && isEnemy && (!playerDefeated || !enemyDefeated)) {
             playGame();
         }
-    })
+    });
+
+    
 
 });
 
@@ -105,7 +131,6 @@ $(document).ready(function() {
 
         enemies.forEach(element => {
             $(element).on("click", function() {
-                
                 if(!isEnemy) {
                     $("#defender").append(element);
 
@@ -143,8 +168,54 @@ $(document).ready(function() {
     }
 
     function playGame() {
-        console.log(player);
-        console.log(enemy);
+        
+        player.health -= enemy.counterAttack;
+        enemy.health -= player.attackPoints;
+
+        player.attackPoints = player.attackPower * player.attackPoints;
+
+        $(player.element).find("p.score").text(player.health);
+        $(enemy.element).find("p.score").text(enemy.health);
+
+        if(player.health < 1) {
+
+            $(attatckPromt).text("");
+            $(defendPromt).text("You are defeated");
+           
+            playerDefeated = true;
+
+            $("#fight").prop("disabled","true");
+
+            $("#main").append("<button id='reset'>Reset</button>");
+            $("#reset").on("click", function() {
+                resetGame();
+                location.reload();
+            });
+        
+            
+        }
+        else if (enemy.health < 1) {
+
+            $(attatckPromt).text("");
+            $(defendPromt).text("You are Victorious. Select a new challenger!");
+
+            var index = elementArray.indexOf(enemy.element);
+            $(enemy.element).remove();
+            
+
+            elementArray.splice(index,1);
+
+            enemyDefeated = true;
+            isEnemy = false;
+
+            startGame(player.element,elementArray, player);
+        }
+
+        else {
+            $(attatckPromt).text("You attacked for "+ player.attackPoints + " damage");
+            $(defendPromt).text(enemy.name + " counter attacked for " + enemy.counterAttack + " damage");
+        }
+        
     }
 
     function resetGame() {
