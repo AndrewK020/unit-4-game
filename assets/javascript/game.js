@@ -15,7 +15,7 @@ var ObiWan = {
     name: "Obi Wan",
     health: 120,
     attackPower: 1.5,
-    attackPoints: 6,
+    attackPoints: 4.5,
     counterAttack: 15,
     element: obiWan
 }
@@ -23,8 +23,8 @@ var ObiWan = {
 var Anakin = {
     name: "Anakin",
     health: 100,
-    attackPower: 1.5,
-    attackPoints: 7,
+    attackPower: 2,
+    attackPoints: 5,
     counterAttack: 20,
     element: anakin
 }
@@ -32,8 +32,8 @@ var Anakin = {
 var DarthMaul = {
     name: "Darth Maul",
     health: 180,
-    attackPower: 1.2,
-    attackPoints: 4,
+    attackPower: 1.5,
+    attackPoints: 3,
     counterAttack: 10,
     element: darthMaul
 }
@@ -41,8 +41,8 @@ var DarthMaul = {
 var DarthSidious = {
     name: "Darth Sidious",
     health: 150,
-    attackPower: 1.1,
-    attackPoints: 5,
+    attackPower: 1.25,
+    attackPoints: 2,
     counterAttack: 12,
     element: darthSidious
 }
@@ -50,6 +50,7 @@ var DarthSidious = {
 
 var isPlayer = false;
 var isEnemy = false;
+
 
 var playerDefeated = false;
 var enemyDefeated = false;
@@ -208,7 +209,19 @@ $(document).ready(function() {
             enemyDefeated = true;
             isEnemy = false;
 
-            startGame(player.element,elementArray, player);
+            if(elementArray.length === 0) {
+                $("#main").append("<button id='reset'>Reset</button>");
+                $(defendPromt).text("You are Victorious. Try again!");
+
+                $("#reset").on("click", function() {
+                    resetGame();
+                    location.reload();
+                });
+            }
+            else {
+                startGame(player.element,elementArray, player);
+            }
+            
         }
 
         else {
