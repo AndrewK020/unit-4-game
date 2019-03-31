@@ -16,7 +16,7 @@ var ObiWan = {
     health: 120,
     attackPower: 1.5,
     attackPoints: 4.5,
-    counterAttack: 15,
+    counterAttack: 12,
     element: obiWan
 }
 
@@ -25,25 +25,25 @@ var Anakin = {
     health: 100,
     attackPower: 2,
     attackPoints: 5,
-    counterAttack: 20,
+    counterAttack: 14,
     element: anakin
 }
 
 var DarthMaul = {
     name: "Darth Maul",
     health: 180,
-    attackPower: 1.5,
+    attackPower: 1.75,
     attackPoints: 3,
-    counterAttack: 10,
+    counterAttack: 8,
     element: darthMaul
 }
 
 var DarthSidious = {
     name: "Darth Sidious",
     health: 150,
-    attackPower: 1.25,
+    attackPower: 1.5,
     attackPoints: 2,
-    counterAttack: 12,
+    counterAttack: 10,
     element: darthSidious
 }
 
